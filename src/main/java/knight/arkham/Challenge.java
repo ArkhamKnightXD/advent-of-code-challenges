@@ -30,23 +30,61 @@ public class Challenge {
         return fileValues;
     }
 
+    public static void backpackOrganizationChallenge() {
+//        Lowercase item types a through z have priorities 1 through 26.
+//        Uppercase item types A through Z have priorities 27 through 52.
+
+
+        List<String> backpacksContent = loadFileData("backpacks.txt");
+
+        for (String content : backpacksContent) {
+
+            getCommonItem(content);
+        }
+    }
+
+    private static void getCommonItem(String backpackContent){
+
+        var firstCompartment = backpackContent.substring(0, backpackContent.length()/2);
+        var secondCompartment = backpackContent.substring(backpackContent.length()/2);
+
+        var firstCompartmentItems = new char[firstCompartment.length()];
+        var secondCompartmentItems = new char[secondCompartment.length()];
+
+        System.out.println("first compartment: " + firstCompartment);
+        System.out.println("second compartment: " + secondCompartment);
+
+        for (int i = 0; i < firstCompartment.length(); i++)
+            firstCompartmentItems[i] = firstCompartment.charAt(i);
+
+        for (int i = 0; i < secondCompartment.length(); i++)
+            secondCompartmentItems[i] = secondCompartment.charAt(i);
+
+//        for (int i = 0; i < firstCompartment.length(); i++){
+//            System.out.println(firstCompartmentItems[i]);
+//            System.out.println(secondCompartmentItems[i]);
+//        }
+
+    }
+
+
     public static void rockPaperAndScissorsChallenge() {
 
-        List<String> values = loadFileData("tournament.txt");
+        List<String> roundValues = loadFileData("tournament.txt");
 
         int totalScorePart1 = 0;
         int totalScorePart2 = 0;
 
-        for (String value : values) {
+        for (String roundValue : roundValues) {
 
-            totalScorePart1 = getTournamentTotalScore(totalScorePart1, value, true);
-            totalScorePart2 = getTournamentTotalScore(totalScorePart2, value, false);
+            totalScorePart1 = getTournamentTotalScore(totalScorePart1, roundValue, true);
+            totalScorePart2 = getTournamentTotalScore(totalScorePart2, roundValue, false);
         }
 
         printChallengeResults(2, totalScorePart1, totalScorePart2);
     }
 
-    private static int getTournamentTotalScore(int totalScore, String value, boolean isPart1) {
+    private static int getTournamentTotalScore(int totalScore, String roundValue, boolean isPart1) {
 
         int rockScore = 1;
         int paperScore = 2;
@@ -59,7 +97,7 @@ public class Challenge {
         //Rival variables: A = Rock, B = Paper, C = Scissor
         //My Variables Part 1: X = Rock, Y = Paper, Z = Scissor
         //My Variables Part 2: X = You need to lose, Y = You need to draw, Z = You need to Win
-        switch (value) {
+        switch (roundValue) {
             case "A X":
                 totalScore += isPart1 ? (rockScore + draw) : (scissorsScore + lost);
                 break;
