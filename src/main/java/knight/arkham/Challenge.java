@@ -43,8 +43,7 @@ public class Challenge {
             totalScorePart2 = getTournamentTotalScore(totalScorePart2, value, false);
         }
 
-        System.out.println("Reto 2 Completado");
-        System.out.println("Respuesta Parte 1: " + totalScorePart1 + "\nRespuesta Parte 2: " + totalScorePart2);
+        printChallengeResults(2, totalScorePart1, totalScorePart2);
     }
 
     private static int getTournamentTotalScore(int totalScore, String value, boolean isPart1) {
@@ -123,7 +122,11 @@ public class Challenge {
                 Integer.parseInt(totalCaloriesOfEachElf.get(arraySize - 1)) +
                 Integer.parseInt(totalCaloriesOfEachElf.get(arraySize - 2));
 
-        System.out.println("Reto 1 Completado");
+        printChallengeResults(1, maxValue, totalCaloriesOfTop3);
+    }
+
+    private static void printChallengeResults(int challengeNumber, int maxValue, int totalCaloriesOfTop3) {
+        System.out.println("\nReto #"+challengeNumber+ " Completado");
         System.out.println("Respuesta Parte 1: " + maxValue + "\nRespuesta Parte 2: " + totalCaloriesOfTop3);
     }
 }
