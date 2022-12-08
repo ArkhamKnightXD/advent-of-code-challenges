@@ -4,12 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 public class Challenge {
 
-    private static List<String> loadFileData(String filename) {
+    private static Scanner loadFileData(String filename) {
         var file = new File(filename);
         Scanner scanner = null;
         try {
@@ -18,30 +17,20 @@ public class Challenge {
             e.printStackTrace();
         }
 
-        var fileValues = new ArrayList<String>();
-
-        if (scanner != null) {
-
-            while (scanner.hasNextLine())
-                fileValues.add(scanner.nextLine());
-
-            scanner.close();
-        }
-
-        return fileValues;
+        return scanner;
     }
+
 
     public static void backpackOrganizationChallenge() {
 
         int totalSumOfItemsPriority = 0;
 
-        List<String> backpacksContent = loadFileData("backpacks.txt");
+        var backpacksContent = loadFileData("backpacks.txt");
 
-        for (String content : backpacksContent) {
+        while (backpacksContent.hasNextLine()){
 
-            System.out.println(content);
+            var content = backpacksContent.nextLine();
 
-//            getPriorityBadgeSum(content);
             totalSumOfItemsPriority += getPriorityItemSum(content);
         }
 
@@ -121,7 +110,9 @@ public class Challenge {
         int totalScorePart1 = 0;
         int totalScorePart2 = 0;
 
-        for (var roundValue : tournamentRoundValues) {
+        while (tournamentRoundValues.hasNextLine()){
+
+            var roundValue = tournamentRoundValues.nextLine();
 
             totalScorePart1 = getTournamentTotalScore(totalScorePart1, roundValue, true);
             totalScorePart2 = getTournamentTotalScore(totalScorePart2, roundValue, false);
@@ -185,7 +176,9 @@ public class Challenge {
 
         var totalCaloriesOfEachElf = new ArrayList<String>();
 
-        for (var actualCalories : calories) {
+        while (calories.hasNextLine()){
+
+            var actualCalories = calories.nextLine();
 
             if (actualCalories.equals("")) {
 
