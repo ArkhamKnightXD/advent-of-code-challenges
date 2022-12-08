@@ -31,8 +31,6 @@ public class Challenge {
 
         var itemsPriority = getItemsPriorityMap();
 
-        int linesCounter = 0;
-
         var actualElfGroup = new ArrayList<String>();
 
         while (backpacksContent.hasNextLine()){
@@ -41,13 +39,11 @@ public class Challenge {
 
             actualElfGroup.add(content);
 
-            linesCounter++;
-
-            if (linesCounter == 3){
+            if (actualElfGroup.size() == 3){
 
                 totalSumOfBadgePriority += getPriorityBadgeSum(actualElfGroup, itemsPriority);
 
-                linesCounter = 0;
+                actualElfGroup.clear();
             }
 
             totalSumOfItemsPriority += getPriorityItemSum(content, itemsPriority);
@@ -77,7 +73,7 @@ public class Challenge {
 
         var itemRepeatCounter = 0;
 
-        var sumOfItemsPriority = 0;
+        var sumOfBadgePriority = 0;
 
         for (var content1 :badgeContent1) {
 
@@ -89,17 +85,14 @@ public class Challenge {
 
                         var itemPriorityValue = itemsPriority.get(String.valueOf(content1));
 
-                        sumOfItemsPriority += itemPriorityValue;
+                        sumOfBadgePriority += itemPriorityValue;
                         itemRepeatCounter++;
                     }
                 }
             }
         }
 
-
-        list.clear();
-
-        return sumOfItemsPriority;
+        return sumOfBadgePriority;
     }
 
 //    To help prioritize item rearrangement, every item type can be converted to a priority:
