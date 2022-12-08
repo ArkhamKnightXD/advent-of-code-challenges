@@ -3,6 +3,7 @@ package knight.arkham;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -31,28 +32,29 @@ public class Challenge {
     }
 
     public static void backpackOrganizationChallenge() {
-//        Lowercase item types a through z have priorities 1 through 26.
-//        Uppercase item types A through Z have priorities 27 through 52.
 
+        int totalSumOfItemsPriority = 0;
 
         List<String> backpacksContent = loadFileData("backpacks.txt");
 
         for (String content : backpacksContent) {
 
-            getCommonItem(content);
+            totalSumOfItemsPriority += getPriorityItemSum(content);
         }
+
+        System.out.println(totalSumOfItemsPriority);
     }
 
-    private static void getCommonItem(String backpackContent){
+//    To help prioritize item rearrangement, every item type can be converted to a priority:
+//    Lowercase item types a through z have priorities 1 through 26.
+//    Uppercase item types A through Z have priorities 27 through 52.
+    private static int getPriorityItemSum(String backpackContent) {
 
-        var firstCompartment = backpackContent.substring(0, backpackContent.length()/2);
-        var secondCompartment = backpackContent.substring(backpackContent.length()/2);
+        var firstCompartment = backpackContent.substring(0, backpackContent.length() / 2);
+        var secondCompartment = backpackContent.substring(backpackContent.length() / 2);
 
         var firstCompartmentItems = new char[firstCompartment.length()];
         var secondCompartmentItems = new char[secondCompartment.length()];
-
-        System.out.println("first compartment: " + firstCompartment);
-        System.out.println("second compartment: " + secondCompartment);
 
         for (int i = 0; i < firstCompartment.length(); i++)
             firstCompartmentItems[i] = firstCompartment.charAt(i);
@@ -60,11 +62,48 @@ public class Challenge {
         for (int i = 0; i < secondCompartment.length(); i++)
             secondCompartmentItems[i] = secondCompartment.charAt(i);
 
-//        for (int i = 0; i < firstCompartment.length(); i++){
-//            System.out.println(firstCompartmentItems[i]);
-//            System.out.println(secondCompartmentItems[i]);
-//        }
+        int itemRepeatCounter = 0;
 
+        int sumOfItemsPriority = 0;
+
+        var itemsPriority = getItemsPriorityMap();
+
+        for (char firstCompartmentItem : firstCompartmentItems) {
+
+            for (char secondCompartmentItem : secondCompartmentItems) {
+
+                if (firstCompartmentItem == secondCompartmentItem && itemRepeatCounter == 0) {
+
+                    itemRepeatCounter++;
+                    var itemPriorityValue = itemsPriority.get(String.valueOf(firstCompartmentItem));
+
+                    sumOfItemsPriority += itemPriorityValue;
+                }
+            }
+        }
+
+        return sumOfItemsPriority;
+    }
+
+    private static HashMap<String, Integer> getItemsPriorityMap() {
+
+        var itemsPriority = new HashMap<String, Integer>();
+
+        int priorityValue = 1;
+
+        for (char letter = 'a'; letter <= 'z'; ++letter){
+
+            itemsPriority.put(String.valueOf(letter), priorityValue);
+            priorityValue++;
+        }
+
+        for (char letter = 'A'; letter <= 'Z'; ++letter){
+
+            itemsPriority.put(String.valueOf(letter), priorityValue);
+            priorityValue++;
+        }
+
+        return itemsPriority;
     }
 
 
@@ -164,7 +203,7 @@ public class Challenge {
     }
 
     private static void printChallengeResults(int challengeNumber, int maxValue, int totalCaloriesOfTop3) {
-        System.out.println("\nReto #"+challengeNumber+ " Completado");
+        System.out.println("\nReto #" + challengeNumber + " Completado");
         System.out.println("Respuesta Parte 1: " + maxValue + "\nRespuesta Parte 2: " + totalCaloriesOfTop3);
     }
 }
