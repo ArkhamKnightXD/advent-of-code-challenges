@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public class Challenge {
@@ -23,28 +24,88 @@ public class Challenge {
 
     public static void backpackOrganizationChallenge() {
 
-        int totalSumOfItemsPriority = 0;
-
         var backpacksContent = loadFileData("backpacks.txt");
+
+        int totalSumOfItemsPriority = 0;
+        int totalSumOfBadgePriority = 0;
+
+        var itemsPriority = getItemsPriorityMap();
+
+        int linesCounter = 0;
+
+        var actualElfGroup = new ArrayList<String>();
 
         while (backpacksContent.hasNextLine()){
 
             var content = backpacksContent.nextLine();
 
-            totalSumOfItemsPriority += getPriorityItemSum(content);
+            actualElfGroup.add(content);
+
+            linesCounter++;
+
+            if (linesCounter == 3){
+
+                totalSumOfBadgePriority += getPriorityBadgeSum(actualElfGroup, itemsPriority);
+
+                linesCounter = 0;
+            }
+
+            totalSumOfItemsPriority += getPriorityItemSum(content, itemsPriority);
         }
 
-        printChallengeResults(3, totalSumOfItemsPriority, 0);
+        printChallengeResults(3, totalSumOfItemsPriority, totalSumOfBadgePriority);
     }
 
-//    private static void getPriorityBadgeSum(String backpackContent){
-//
-//    }
+    private static int getPriorityBadgeSum(List<String> list, HashMap<String, Integer> itemsPriority){
+
+        var badge1Length = list.get(0).length();
+        var badge2Length = list.get(1).length();
+        var badge3Length = list.get(2).length();
+
+        var badgeContent1 = new char[badge1Length];
+        var badgeContent2 = new char[badge2Length];
+        var badgeContent3 = new char[badge3Length];
+
+        for (var i = 0; i < badge1Length; i++)
+            badgeContent1[i] = list.get(0).charAt(i);
+
+        for (var i = 0; i < badge2Length; i++)
+            badgeContent2[i] = list.get(1).charAt(i);
+
+        for (var i = 0; i < badge3Length; i++)
+            badgeContent3[i] = list.get(2).charAt(i);
+
+        var itemRepeatCounter = 0;
+
+        var sumOfItemsPriority = 0;
+
+        for (var content1 :badgeContent1) {
+
+            for (var content2 :badgeContent2) {
+
+                for (var content3 :badgeContent3) {
+
+                    if ((content1 == content2 && content2 == content3) && itemRepeatCounter == 0){
+
+                        var itemPriorityValue = itemsPriority.get(String.valueOf(content1));
+
+                        sumOfItemsPriority += itemPriorityValue;
+                        itemRepeatCounter++;
+                    }
+                }
+            }
+        }
+
+
+        list.clear();
+
+        return sumOfItemsPriority;
+    }
 
 //    To help prioritize item rearrangement, every item type can be converted to a priority:
 //    Lowercase item types a through z have priorities 1 through 26.
 //    Uppercase item types A through Z have priorities 27 through 52.
-    private static int getPriorityItemSum(String backpackContent) {
+    private static int getPriorityItemSum(String backpackContent, HashMap<String, Integer> itemsPriority) {
 
         var firstCompartment = backpackContent.substring(0, backpackContent.length() / 2);
         var secondCompartment = backpackContent.substring(backpackContent.length() / 2);
@@ -61,8 +122,6 @@ public class Challenge {
         var itemRepeatCounter = 0;
 
         var sumOfItemsPriority = 0;
-
-        var itemsPriority = getItemsPriorityMap();
 
         for (char firstCompartmentItem : firstCompartmentItems) {
 
