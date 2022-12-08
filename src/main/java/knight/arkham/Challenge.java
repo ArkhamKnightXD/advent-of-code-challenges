@@ -81,10 +81,10 @@ public class Challenge {
 
                 if (firstCompartmentItem == secondCompartmentItem && itemRepeatCounter == 0) {
 
-                    itemRepeatCounter++;
                     var itemPriorityValue = itemsPriority.get(String.valueOf(firstCompartmentItem));
 
                     sumOfItemsPriority += itemPriorityValue;
+                    itemRepeatCounter++;
                 }
             }
         }
