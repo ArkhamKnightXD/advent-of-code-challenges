@@ -25,10 +25,41 @@ public class Challenge {
 
         var cleaningSections = loadFileData("cleaning-pairs.txt");
 
-        while (cleaningSections.hasNextLine())
-            System.out.println(cleaningSections.nextLine());
+        int counter = 0;
+
+        while (cleaningSections.hasNextLine()){
+
+            var sections = cleaningSections.nextLine();
+
+            counter = calculateOverlapsSections(counter, sections);
+
+        }
+
+        System.out.println("Respuesta: "+ counter);
 
         cleaningSections.close();
+    }
+
+    private static int calculateOverlapsSections(int counter, String sections) {
+        var elements = sections.split(",");
+
+        var element1 = elements[0];
+        var simpleElement1 = element1.split("-")[0];
+        var simpleElement2 = element1.split("-")[1];
+
+        var value1 = Integer.parseInt(simpleElement1);
+        var value2 = Integer.parseInt(simpleElement2);
+
+        var element2 = elements[1];
+        var simpleElementV2 = element2.split("-")[0];
+        var simpleElementV2Part2 = element2.split("-")[1];
+
+        var value3 = Integer.parseInt(simpleElementV2);
+        var value4 = Integer.parseInt(simpleElementV2Part2);
+
+        if (value1 <= value3 && value2 >= value4 || value1 >= value3 && value2 <= value4)
+            counter++;
+        return counter;
     }
 
 
@@ -257,6 +288,7 @@ public class Challenge {
         var arraySize = totalCaloriesOfEachElf.size() - 1;
 
         var totalCaloriesOfTop3 = Integer.parseInt(totalCaloriesOfEachElf.get(arraySize)) +
+
                 Integer.parseInt(totalCaloriesOfEachElf.get(arraySize - 1)) +
                 Integer.parseInt(totalCaloriesOfEachElf.get(arraySize - 2));
 
