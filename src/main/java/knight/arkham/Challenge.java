@@ -21,6 +21,16 @@ public class Challenge {
         return scanner;
     }
 
+    public static void campCleanupChallenge(){
+
+        var cleaningSections = loadFileData("cleaning-pairs.txt");
+
+        while (cleaningSections.hasNextLine())
+            System.out.println(cleaningSections.nextLine());
+
+        cleaningSections.close();
+    }
+
 
     public static void backpackOrganizationChallenge() {
 
@@ -48,6 +58,8 @@ public class Challenge {
 
             totalSumOfItemsPriority += getPriorityItemSum(content, itemsPriority);
         }
+
+        backpacksContent.close();
 
         printChallengeResults(3, totalSumOfItemsPriority, totalSumOfBadgePriority);
     }
@@ -163,6 +175,8 @@ public class Challenge {
             totalScorePart2 = getTournamentTotalScore(totalScorePart2, roundValue, false);
         }
 
+        tournamentRoundValues.close();
+
         printChallengeResults(2, totalScorePart1, totalScorePart2);
     }
 
@@ -237,6 +251,8 @@ public class Challenge {
             } else
                 actualSum += Integer.parseInt(actualCalories);
         }
+
+        calories.close();
 
         var arraySize = totalCaloriesOfEachElf.size() - 1;
 

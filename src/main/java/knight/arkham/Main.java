@@ -5,6 +5,7 @@ public class Main {
 
 //        Challenge.caloriesChallenge();
 //        Challenge.rockPaperAndScissorsChallenge();
-        Challenge.backpackOrganizationChallenge();
+//        Challenge.backpackOrganizationChallenge();
+        Challenge.campCleanupChallenge();
     }
 }
