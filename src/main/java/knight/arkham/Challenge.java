@@ -25,22 +25,24 @@ public class Challenge {
 
         var cleaningSections = loadFileData("cleaning-pairs.txt");
 
-        int counter = 0;
+        int part1Counter = 0;
+        int part2Counter = 0;
 
         while (cleaningSections.hasNextLine()){
 
             var sections = cleaningSections.nextLine();
 
-            counter = calculateOverlapsSections(counter, sections);
+//            part1Counter = calculateOverlapsSections(part1Counter, sections, true);
+            part2Counter = calculateOverlapsSections(part2Counter, sections, false);
 
         }
 
-        System.out.println("Respuesta: "+ counter);
-
         cleaningSections.close();
+
+        printChallengeResults(4, part1Counter, part2Counter);
     }
 
-    private static int calculateOverlapsSections(int counter, String sections) {
+    private static int calculateOverlapsSections(int counter, String sections, boolean isPart1) {
         var elements = sections.split(",");
 
         var element1 = elements[0];
@@ -57,8 +59,12 @@ public class Challenge {
         var value3 = Integer.parseInt(simpleElementV2);
         var value4 = Integer.parseInt(simpleElementV2Part2);
 
-        if (value1 <= value3 && value2 >= value4 || value1 >= value3 && value2 <= value4)
+//        if (isPart1 && value1 <= value3 && value2 >= value4 || value1 >= value3 && value2 <= value4)
+//            counter++;
+
+        if (!isPart1 && value1 <= value3 && value2 >= value4 || value1 >= value3 && value2 <= value4 || value1 <= value4 && value2 >= value3)
             counter++;
+
         return counter;
     }
 
