@@ -52,34 +52,24 @@ public class Challenge {
         printChallengeResults(3, totalSumOfItemsPriority, totalSumOfBadgePriority);
     }
 
-    private static int getPriorityBadgeSum(List<String> list, HashMap<String, Integer> itemsPriority){
+    private static int getPriorityBadgeSum(List<String> elfGroup, HashMap<String, Integer> itemsPriority){
 
-        var badge1Length = list.get(0).length();
-        var badge2Length = list.get(1).length();
-        var badge3Length = list.get(2).length();
+        var backpackGroupMember1 = elfGroup.get(0);
+        var backpackGroupMember2 = elfGroup.get(1);
+        var backpackGroupMember3 = elfGroup.get(2);
 
-        var badgeContent1 = new char[badge1Length];
-        var badgeContent2 = new char[badge2Length];
-        var badgeContent3 = new char[badge3Length];
+        var backpackItems1 = convertStringToCharArray(backpackGroupMember1);
+        var backpackItems2 = convertStringToCharArray(backpackGroupMember2);
+        var backpackItems3 = convertStringToCharArray(backpackGroupMember3);
 
-        for (var i = 0; i < badge1Length; i++)
-            badgeContent1[i] = list.get(0).charAt(i);
+        int itemRepeatCounter = 0;
+        int sumOfBadgePriority = 0;
 
-        for (var i = 0; i < badge2Length; i++)
-            badgeContent2[i] = list.get(1).charAt(i);
+        for (char content1 :backpackItems1) {
 
-        for (var i = 0; i < badge3Length; i++)
-            badgeContent3[i] = list.get(2).charAt(i);
+            for (char content2 :backpackItems2) {
 
-        var itemRepeatCounter = 0;
-
-        var sumOfBadgePriority = 0;
-
-        for (var content1 :badgeContent1) {
-
-            for (var content2 :badgeContent2) {
-
-                for (var content3 :badgeContent3) {
+                for (char content3 :backpackItems3) {
 
                     if ((content1 == content2 && content2 == content3) && itemRepeatCounter == 0){
 
@@ -95,26 +85,16 @@ public class Challenge {
         return sumOfBadgePriority;
     }
 
-//    To help prioritize item rearrangement, every item type can be converted to a priority:
-//    Lowercase item types a through z have priorities 1 through 26.
-//    Uppercase item types A through Z have priorities 27 through 52.
     private static int getPriorityItemSum(String backpackContent, HashMap<String, Integer> itemsPriority) {
 
         var firstCompartment = backpackContent.substring(0, backpackContent.length() / 2);
         var secondCompartment = backpackContent.substring(backpackContent.length() / 2);
 
-        var firstCompartmentItems = new char[firstCompartment.length()];
-        var secondCompartmentItems = new char[secondCompartment.length()];
+        var firstCompartmentItems = convertStringToCharArray(firstCompartment);
+        var secondCompartmentItems = convertStringToCharArray(secondCompartment);
 
-        for (var i = 0; i < firstCompartment.length(); i++)
-            firstCompartmentItems[i] = firstCompartment.charAt(i);
-
-        for (var i = 0; i < secondCompartment.length(); i++)
-            secondCompartmentItems[i] = secondCompartment.charAt(i);
-
-        var itemRepeatCounter = 0;
-
-        var sumOfItemsPriority = 0;
+        int itemRepeatCounter = 0;
+        int sumOfItemsPriority = 0;
 
         for (char firstCompartmentItem : firstCompartmentItems) {
 
@@ -133,25 +113,38 @@ public class Challenge {
         return sumOfItemsPriority;
     }
 
+    private static char[] convertStringToCharArray(String backpackContent) {
+
+        var backpackItems = new char[backpackContent.length()];
+
+        for (int i = 0; i < backpackContent.length(); i++)
+            backpackItems[i] = backpackContent.charAt(i);
+
+        return backpackItems;
+    }
+
+    // To help prioritize item rearrangement, every item type can be converted to a priority:
+//    Lowercase item types a through z have priorities 1 through 26.
+//    Uppercase item types A through Z have priorities 27 through 52.
     private static HashMap<String, Integer> getItemsPriorityMap() {
 
-        var itemsPriority = new HashMap<String, Integer>();
+        var itemsPriorityMap = new HashMap<String, Integer>();
 
         int priorityValue = 1;
 
-        for (var letter = 'a'; letter <= 'z'; ++letter){
+        for (var letter = 'a'; letter <= 'z'; letter++){
 
-            itemsPriority.put(String.valueOf(letter), priorityValue);
+            itemsPriorityMap.put(String.valueOf(letter), priorityValue);
             priorityValue++;
         }
 
-        for (var letter = 'A'; letter <= 'Z'; ++letter){
+        for (var letter = 'A'; letter <= 'Z'; letter++){
 
-            itemsPriority.put(String.valueOf(letter), priorityValue);
+            itemsPriorityMap.put(String.valueOf(letter), priorityValue);
             priorityValue++;
         }
 
-        return itemsPriority;
+        return itemsPriorityMap;
     }
 
 
