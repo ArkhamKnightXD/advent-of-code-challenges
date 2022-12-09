@@ -32,8 +32,8 @@ public class Challenge {
 
             var sections = cleaningSections.nextLine();
 
-//            part1Counter = calculateOverlapsSections(part1Counter, sections, true);
-            part2Counter = calculateOverlapsSections(part2Counter, sections, false);
+            part1Counter = calculateOverlapsSections(part1Counter, sections);
+            part2Counter = calculateOverlapsSections(part2Counter, sections);
 
         }
 
@@ -42,7 +42,7 @@ public class Challenge {
         printChallengeResults(4, part1Counter, part2Counter);
     }
 
-    private static int calculateOverlapsSections(int counter, String sections, boolean isPart1) {
+    private static int calculateOverlapsSections(int counter, String sections) {
         var elements = sections.split(",");
 
         var element1 = elements[0];
@@ -59,11 +59,13 @@ public class Challenge {
         var value3 = Integer.parseInt(simpleElementV2);
         var value4 = Integer.parseInt(simpleElementV2Part2);
 
-//        if (isPart1 && value1 <= value3 && value2 >= value4 || value1 >= value3 && value2 <= value4)
-//            counter++;
+//        Todo resolver problema de los if para que los calculos esten bien si estan los 2 juntos
 
-        if (!isPart1 && value1 <= value3 && value2 >= value4 || value1 >= value3 && value2 <= value4 || value1 <= value4 && value2 >= value3)
+        if (value1 <= value3 && value2 >= value4 || value1 >= value3 && value2 <= value4)
             counter++;
+
+//        if (value1 <= value3 && value2 >= value4 || value1 >= value3 && value2 <= value4 || value1 <= value4 && value2 >= value3)
+//            counter++;
 
         return counter;
     }
