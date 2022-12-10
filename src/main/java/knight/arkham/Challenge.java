@@ -32,44 +32,27 @@ public class Challenge {
 
             var sections = cleaningSections.nextLine();
 
-            part1Counter = calculateOverlapsSections(part1Counter, sections);
-            part2Counter = calculateOverlapsSections(part2Counter, sections);
+            var sectionPairs = sections.split(",");
 
+            var sectionPair1 = sectionPairs[0];
+            int minValueSection1 = Integer.parseInt(sectionPair1.split("-")[0]);
+            int maxValueSection1 = Integer.parseInt(sectionPair1.split("-")[1]);
+
+            var sectionPair2 = sectionPairs[1];
+            int minValueSection2 = Integer.parseInt(sectionPair2.split("-")[0]);
+            int maxValueSection2 = Integer.parseInt(sectionPair2.split("-")[1]);
+
+            if (minValueSection1 <= minValueSection2 && maxValueSection1 >= maxValueSection2 || minValueSection1 >= minValueSection2 && maxValueSection1 <= maxValueSection2)
+                part1Counter++;
+
+            if (minValueSection1 <= minValueSection2 && maxValueSection1 >= maxValueSection2 || minValueSection1 >= minValueSection2 && maxValueSection1 <= maxValueSection2 || minValueSection1 <= maxValueSection2 && maxValueSection1 >= minValueSection2)
+                part2Counter++;
         }
 
         cleaningSections.close();
 
         printChallengeResults(4, part1Counter, part2Counter);
     }
-
-    private static int calculateOverlapsSections(int counter, String sections) {
-        var elements = sections.split(",");
-
-        var element1 = elements[0];
-        var simpleElement1 = element1.split("-")[0];
-        var simpleElement2 = element1.split("-")[1];
-
-        var value1 = Integer.parseInt(simpleElement1);
-        var value2 = Integer.parseInt(simpleElement2);
-
-        var element2 = elements[1];
-        var simpleElementV2 = element2.split("-")[0];
-        var simpleElementV2Part2 = element2.split("-")[1];
-
-        var value3 = Integer.parseInt(simpleElementV2);
-        var value4 = Integer.parseInt(simpleElementV2Part2);
-
-//        Todo resolver problema de los if para que los calculos esten bien si estan los 2 juntos
-
-        if (value1 <= value3 && value2 >= value4 || value1 >= value3 && value2 <= value4)
-            counter++;
-
-//        if (value1 <= value3 && value2 >= value4 || value1 >= value3 && value2 <= value4 || value1 <= value4 && value2 >= value3)
-//            counter++;
-
-        return counter;
-    }
-
 
     public static void backpackOrganizationChallenge() {
 
