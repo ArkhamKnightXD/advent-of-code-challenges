@@ -2,10 +2,7 @@ package knight.arkham;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Challenge {
 
@@ -19,6 +16,25 @@ public class Challenge {
         }
 
         return scanner;
+    }
+
+    public static void supplyStacksChallenge(){
+
+        var cargoInstructions = loadFileData("supply-stacks.txt");
+
+        var stack = new Stack<String>();
+
+        //        Para resolver el problema debo de utilizar push, pop y peek
+//        stack.push("test");
+//        stack.peek()
+
+        int lineCounter = 0;
+
+        while (cargoInstructions.hasNextLine() && lineCounter < 5){
+            System.out.println(cargoInstructions.nextLine());
+
+            lineCounter++;
+        }
     }
 
     public static void campCleanupChallenge(){
