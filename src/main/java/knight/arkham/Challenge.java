@@ -30,9 +30,7 @@ public class Challenge {
 
         while (cleaningSections.hasNextLine()){
 
-            var sections = cleaningSections.nextLine();
-
-            var sectionPairs = sections.split(",");
+            var sectionPairs = cleaningSections.nextLine().split(",");
 
             var sectionPair1 = sectionPairs[0];
             int minValueSection1 = Integer.parseInt(sectionPair1.split("-")[0]);
@@ -42,10 +40,14 @@ public class Challenge {
             int minValueSection2 = Integer.parseInt(sectionPair2.split("-")[0]);
             int maxValueSection2 = Integer.parseInt(sectionPair2.split("-")[1]);
 
-            if (minValueSection1 <= minValueSection2 && maxValueSection1 >= maxValueSection2 || minValueSection1 >= minValueSection2 && maxValueSection1 <= maxValueSection2)
+            boolean isSection1OverlappingSection2 = (minValueSection1<=minValueSection2 && maxValueSection1>=maxValueSection2);
+            boolean isSection2OverlappingSection1 = (minValueSection1>=minValueSection2 && maxValueSection1<=maxValueSection2);
+            boolean isPartialOverlapping = (minValueSection1<=maxValueSection2 && maxValueSection1>=minValueSection2);
+
+            if (isSection1OverlappingSection2 || isSection2OverlappingSection1)
                 part1Counter++;
 
-            if (minValueSection1 <= minValueSection2 && maxValueSection1 >= maxValueSection2 || minValueSection1 >= minValueSection2 && maxValueSection1 <= maxValueSection2 || minValueSection1 <= maxValueSection2 && maxValueSection1 >= minValueSection2)
+            if (isSection1OverlappingSection2 || isSection2OverlappingSection1 || isPartialOverlapping)
                 part2Counter++;
         }
 
