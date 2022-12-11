@@ -103,7 +103,8 @@ public class Challenge {
         cargoStackMap.put("8", stack8);
         cargoStackMap.put("9", stack9);
 
-        System.out.println("Before: " + cargoStackMap.values());
+        System.out.println("Before: " + cargoStackMap);
+
 
         while (cargoInstructions.hasNextLine()) {
 
@@ -116,6 +117,7 @@ public class Challenge {
                 System.out.println("Data: " + instruction);
 
                 var instructionLength = instruction.length();
+                System.out.println("length: " + instructionLength);
 
                 var destinationKey = String.valueOf(instruction.charAt(instruction.length()-1));
 
@@ -123,7 +125,12 @@ public class Challenge {
 
                     int elementsToMove = Integer.parseInt(String.valueOf(instruction.charAt(5)));
 
+                    System.out.println("elements To Move: " + elementsToMove);
+
                     var sourceKey = String.valueOf(instruction.charAt(12));
+
+                    System.out.println("source Key: " + sourceKey);
+                    System.out.println("destination Key: " + destinationKey);
 
                     var sourceStack = cargoStackMap.get(sourceKey);
                     var destinationStack = cargoStackMap.get(destinationKey);
@@ -150,7 +157,7 @@ public class Challenge {
             }
         }
 
-        System.out.println("after: " + cargoStackMap.values());
+        System.out.println("after: " + cargoStackMap);
 
 
         for (var actualStack :cargoStackMap.values())
