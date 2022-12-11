@@ -103,9 +103,6 @@ public class Challenge {
         cargoStackMap.put("8", stack8);
         cargoStackMap.put("9", stack9);
 
-        System.out.println("Before: " + cargoStackMap);
-
-
         while (cargoInstructions.hasNextLine()) {
 
             lineCounter++;
@@ -114,10 +111,7 @@ public class Challenge {
 
             if (lineCounter > 10){
 
-                System.out.println("Data: " + instruction);
-
                 var instructionLength = instruction.length();
-                System.out.println("length: " + instructionLength);
 
                 var destinationKey = String.valueOf(instruction.charAt(instruction.length()-1));
 
@@ -125,12 +119,7 @@ public class Challenge {
 
                     int elementsToMove = Integer.parseInt(String.valueOf(instruction.charAt(5)));
 
-                    System.out.println("elements To Move: " + elementsToMove);
-
                     var sourceKey = String.valueOf(instruction.charAt(12));
-
-                    System.out.println("source Key: " + sourceKey);
-                    System.out.println("destination Key: " + destinationKey);
 
                     var sourceStack = cargoStackMap.get(sourceKey);
                     var destinationStack = cargoStackMap.get(destinationKey);
@@ -142,12 +131,7 @@ public class Challenge {
 
                     int elementsToMove = Integer.parseInt(String.valueOf(instruction.charAt(5)) + instruction.charAt(6));
 
-                    System.out.println("elements To Move: " + elementsToMove);
-
                     var sourceKey = String.valueOf(instruction.charAt(13));
-
-                    System.out.println("source Key: " + sourceKey);
-                    System.out.println("destination Key: " + destinationKey);
 
                     var sourceStack = cargoStackMap.get(sourceKey);
                     var destinationStack = cargoStackMap.get(destinationKey);
@@ -157,14 +141,12 @@ public class Challenge {
             }
         }
 
-        System.out.println("after: " + cargoStackMap);
-
-
         for (var actualStack :cargoStackMap.values())
             System.out.println(actualStack.peek());
     }
 
     private static void fillTheStackFromAnList(Stack<String> stack, ArrayList<String> list) {
+
         Collections.reverse(list);
 
         for (var element : list)
@@ -182,19 +164,14 @@ public class Challenge {
 
             var auxList = new ArrayList<String>();
 
-            var stackElements = source.iterator();
+            while (auxList.size() < elementsToMove){
 
-            while (stackElements.hasNext() && auxList.size() < elementsToMove)
-                auxList.add(stackElements.next());
-
-//        Revierto el orden los elementos de la lista debido a que el orden no es correcto para el stack
-            Collections.reverse(auxList);
-
-            for (var element : auxList) {
-
-                destination.push(element);
-                source.pop();
+                var element = source.pop();
+                auxList.add(element);
             }
+
+            for (var element : auxList)
+                destination.push(element);
         }
     }
 
