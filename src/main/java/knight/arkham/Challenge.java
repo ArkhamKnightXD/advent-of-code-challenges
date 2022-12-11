@@ -22,16 +22,6 @@ public class Challenge {
 
         var cargoInstructions = loadFileData("supply-stacks.txt");
 
-        var stack1 = new Stack<String>();
-        var stack2 = new Stack<String>();
-        var stack3 = new Stack<String>();
-        var stack4 = new Stack<String>();
-        var stack5 = new Stack<String>();
-        var stack6 = new Stack<String>();
-        var stack7 = new Stack<String>();
-        var stack8 = new Stack<String>();
-        var stack9 = new Stack<String>();
-
         var list1 = new ArrayList<String>();
         var list2 = new ArrayList<String>();
         var list3 = new ArrayList<String>();
@@ -50,7 +40,7 @@ public class Challenge {
 
             var instruction = cargoInstructions.nextLine();
 
-//            Hay 4 es char entre cada letra del stack
+//            Hay 4 char entre cada letra del stack
             if (!String.valueOf(instruction.charAt(1)).trim().isEmpty())
                 list1.add(String.valueOf(instruction.charAt(1)));
 
@@ -80,6 +70,16 @@ public class Challenge {
             if (!finalCargoElement.trim().isEmpty())
                 list9.add(finalCargoElement);
         }
+
+        var stack1 = new Stack<String>();
+        var stack2 = new Stack<String>();
+        var stack3 = new Stack<String>();
+        var stack4 = new Stack<String>();
+        var stack5 = new Stack<String>();
+        var stack6 = new Stack<String>();
+        var stack7 = new Stack<String>();
+        var stack8 = new Stack<String>();
+        var stack9 = new Stack<String>();
 
         fillTheStackFromAnList(stack1, list1);
         fillTheStackFromAnList(stack2, list2);
@@ -162,15 +162,15 @@ public class Challenge {
             destination.push(elementToMove);
         } else {
 
-            var auxList = new ArrayList<String>();
+            var temporalList = new ArrayList<String>();
 
-            while (auxList.size() < elementsToMove){
+            while (temporalList.size() < elementsToMove){
 
                 var element = source.pop();
-                auxList.add(element);
+                temporalList.add(element);
             }
 
-            for (var element : auxList)
+            for (var element : temporalList)
                 destination.push(element);
         }
     }
