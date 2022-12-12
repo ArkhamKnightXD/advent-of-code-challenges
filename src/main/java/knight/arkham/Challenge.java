@@ -18,6 +18,14 @@ public class Challenge {
         return scanner;
     }
 
+    public static void tuningTroubleChallenge(){
+
+        var signal = loadFileData("communication.txt");
+
+        while (signal.hasNextLine())
+            System.out.println(signal.nextLine());
+    }
+
     public static void supplyStacksChallenge() {
 
         var cargoInstructions = loadFileData("supply-stacks.txt");

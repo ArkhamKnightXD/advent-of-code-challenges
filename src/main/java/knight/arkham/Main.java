@@ -7,6 +7,7 @@ public class Main {
 //        Challenge.rockPaperAndScissorsChallenge();
 //        Challenge.backpackOrganizationChallenge();
 //        Challenge.campCleanupChallenge();
-        Challenge.supplyStacksChallenge();
+//        Challenge.supplyStacksChallenge();
+        Challenge.tuningTroubleChallenge();
     }
 }
