@@ -22,15 +22,15 @@ public class Challenge {
 
         var cargoInstructions = loadFileData("supply-stacks.txt");
 
-        var list1 = new ArrayList<String>();
-        var list2 = new ArrayList<String>();
-        var list3 = new ArrayList<String>();
-        var list4 = new ArrayList<String>();
-        var list5 = new ArrayList<String>();
-        var list6 = new ArrayList<String>();
-        var list7 = new ArrayList<String>();
-        var list8 = new ArrayList<String>();
-        var list9 = new ArrayList<String>();
+        var initialValuesStack1 = new ArrayList<String>();
+        var initialValuesStack2 = new ArrayList<String>();
+        var initialValuesStack3 = new ArrayList<String>();
+        var initialValuesStack4 = new ArrayList<String>();
+        var initialValuesStack5 = new ArrayList<String>();
+        var initialValuesStack6 = new ArrayList<String>();
+        var initialValuesStack7 = new ArrayList<String>();
+        var initialValuesStack8 = new ArrayList<String>();
+        var initialValuesStack9 = new ArrayList<String>();
 
         int lineCounter = 0;
 
@@ -42,33 +42,33 @@ public class Challenge {
 
 //            Hay 4 char entre cada letra del stack
             if (!String.valueOf(instruction.charAt(1)).trim().isEmpty())
-                list1.add(String.valueOf(instruction.charAt(1)));
+                initialValuesStack1.add(String.valueOf(instruction.charAt(1)));
 
             if (!String.valueOf(instruction.charAt(5)).trim().isEmpty())
-                list2.add(String.valueOf(instruction.charAt(5)));
+                initialValuesStack2.add(String.valueOf(instruction.charAt(5)));
 
             if (!String.valueOf(instruction.charAt(9)).trim().isEmpty())
-                list3.add(String.valueOf(instruction.charAt(9)));
+                initialValuesStack3.add(String.valueOf(instruction.charAt(9)));
 
             if (!String.valueOf(instruction.charAt(13)).trim().isEmpty())
-                list4.add(String.valueOf(instruction.charAt(13)));
+                initialValuesStack4.add(String.valueOf(instruction.charAt(13)));
 
             if (!String.valueOf(instruction.charAt(17)).trim().isEmpty())
-                list5.add(String.valueOf(instruction.charAt(17)));
+                initialValuesStack5.add(String.valueOf(instruction.charAt(17)));
 
             if (!String.valueOf(instruction.charAt(21)).trim().isEmpty())
-                list6.add(String.valueOf(instruction.charAt(21)));
+                initialValuesStack6.add(String.valueOf(instruction.charAt(21)));
 
             if (!String.valueOf(instruction.charAt(25)).trim().isEmpty())
-                list7.add(String.valueOf(instruction.charAt(25)));
+                initialValuesStack7.add(String.valueOf(instruction.charAt(25)));
 
             if (!String.valueOf(instruction.charAt(29)).trim().isEmpty())
-                list8.add(String.valueOf(instruction.charAt(29)));
+                initialValuesStack8.add(String.valueOf(instruction.charAt(29)));
 
             var finalCargoElement = String.valueOf(instruction.charAt(instruction.length() - 2));
 
             if (!finalCargoElement.trim().isEmpty())
-                list9.add(finalCargoElement);
+                initialValuesStack9.add(finalCargoElement);
         }
 
         var stack1 = new Stack<String>();
@@ -81,15 +81,15 @@ public class Challenge {
         var stack8 = new Stack<String>();
         var stack9 = new Stack<String>();
 
-        fillTheStackFromAnList(stack1, list1);
-        fillTheStackFromAnList(stack2, list2);
-        fillTheStackFromAnList(stack3, list3);
-        fillTheStackFromAnList(stack4, list4);
-        fillTheStackFromAnList(stack5, list5);
-        fillTheStackFromAnList(stack6, list6);
-        fillTheStackFromAnList(stack7, list7);
-        fillTheStackFromAnList(stack8, list8);
-        fillTheStackFromAnList(stack9, list9);
+        fillTheStackFromAnList(stack1, initialValuesStack1);
+        fillTheStackFromAnList(stack2, initialValuesStack2);
+        fillTheStackFromAnList(stack3, initialValuesStack3);
+        fillTheStackFromAnList(stack4, initialValuesStack4);
+        fillTheStackFromAnList(stack5, initialValuesStack5);
+        fillTheStackFromAnList(stack6, initialValuesStack6);
+        fillTheStackFromAnList(stack7, initialValuesStack7);
+        fillTheStackFromAnList(stack8, initialValuesStack8);
+        fillTheStackFromAnList(stack9, initialValuesStack9);
 
         var cargoStackMap = new HashMap<String, Stack<String>>();
 
@@ -109,51 +109,63 @@ public class Challenge {
 
             var instruction = cargoInstructions.nextLine();
 
-            if (lineCounter > 10){
-
-                var instructionLength = instruction.length();
-
-                var destinationKey = String.valueOf(instruction.charAt(instruction.length()-1));
-
-                if (instructionLength == 18){
-
-                    int elementsToMove = Integer.parseInt(String.valueOf(instruction.charAt(5)));
-
-                    var sourceKey = String.valueOf(instruction.charAt(12));
-
-                    var sourceStack = cargoStackMap.get(sourceKey);
-                    var destinationStack = cargoStackMap.get(destinationKey);
-
-                    moveElementsBetweenStacks(elementsToMove, sourceStack, destinationStack);
-                }
-
-                else{
-
-                    int elementsToMove = Integer.parseInt(String.valueOf(instruction.charAt(5)) + instruction.charAt(6));
-
-                    var sourceKey = String.valueOf(instruction.charAt(13));
-
-                    var sourceStack = cargoStackMap.get(sourceKey);
-                    var destinationStack = cargoStackMap.get(destinationKey);
-
-                    moveElementsBetweenStacks(elementsToMove, sourceStack, destinationStack);
-                }
-            }
+            if (lineCounter > 10)
+                rearrangeCargoStacks(cargoStackMap, instruction, false);
         }
 
+        var answerChallenge1 = new ArrayList<String>();
+
         for (var actualStack :cargoStackMap.values())
-            System.out.println(actualStack.peek());
+            answerChallenge1.add(actualStack.peek());
+
+        cargoInstructions.close();
+
+//        Para obtener la respuesta del challenge2 debo de cambiar el boolean de false a true.
+        printChallengeResults(5, answerChallenge1, initialValuesStack1);
     }
 
-    private static void fillTheStackFromAnList(Stack<String> stack, ArrayList<String> list) {
+    private static void rearrangeCargoStacks(HashMap<String, Stack<String>> cargoStackMap, String instruction, boolean isPart2) {
 
-        Collections.reverse(list);
+        var instructionLength = instruction.length();
 
-        for (var element : list)
+        var destinationKey = String.valueOf(instruction.charAt(instructionLength-1));
+
+        if (instructionLength == 18){
+
+            int elementsToMove = Integer.parseInt(String.valueOf(instruction.charAt(5)));
+
+            var sourceKey = String.valueOf(instruction.charAt(12));
+
+            var sourceStack = cargoStackMap.get(sourceKey);
+            var destinationStack = cargoStackMap.get(destinationKey);
+
+            moveElementsBetweenStacks(elementsToMove, sourceStack, destinationStack, isPart2);
+        }
+
+        else{
+
+            int elementsToMove = Integer.parseInt(String.valueOf(instruction.charAt(5)) + instruction.charAt(6));
+
+            var sourceKey = String.valueOf(instruction.charAt(13));
+
+            var sourceStack = cargoStackMap.get(sourceKey);
+            var destinationStack = cargoStackMap.get(destinationKey);
+
+            moveElementsBetweenStacks(elementsToMove, sourceStack, destinationStack, isPart2);
+        }
+    }
+
+    private static void fillTheStackFromAnList(Stack<String> stack, ArrayList<String> initialStackValues) {
+
+        Collections.reverse(initialStackValues);
+
+        for (var element : initialStackValues)
             stack.push(element);
+
+        initialStackValues.clear();
     }
 
-    private static void moveElementsBetweenStacks(int elementsToMove, Stack<String> source, Stack<String> destination) {
+    private static void moveElementsBetweenStacks(int elementsToMove, Stack<String> source, Stack<String> destination, boolean isPart2) {
 
         if (elementsToMove == 1) {
 
@@ -169,6 +181,9 @@ public class Challenge {
                 var element = source.pop();
                 temporalList.add(element);
             }
+
+            if (isPart2)
+                Collections.reverse(temporalList);
 
             for (var element : temporalList)
                 destination.push(element);
@@ -443,6 +458,11 @@ public class Challenge {
     }
 
     private static void printChallengeResults(int challengeNumber, int challenge1, int challenge2) {
+        System.out.println("\nReto #" + challengeNumber + " Completado");
+        System.out.println("Respuesta Parte 1: " + challenge1 + "\nRespuesta Parte 2: " + challenge2);
+    }
+
+    private static void printChallengeResults(int challengeNumber, List<String> challenge1, List<String> challenge2) {
         System.out.println("\nReto #" + challengeNumber + " Completado");
         System.out.println("Respuesta Parte 1: " + challenge1 + "\nRespuesta Parte 2: " + challenge2);
     }
