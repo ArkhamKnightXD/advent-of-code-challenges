@@ -28,22 +28,43 @@ public class Challenge {
 
         int firstPacketMarker = 0;
 
-        for (int i = 0; i < communication.length-3; i++) {
+        var set = new HashSet<String>();
 
-            var firstElement = (communication[i] != communication[i+1] && communication[i] != communication[i+2] && communication[i] != communication[i+3]);
-            var secondElement = (communication[i+1] != communication[i+2] && communication[i+1] != communication[i+3]);
-            var thirdElement = (communication[i+2] != communication[i+3]);
+        for (char initialLetter : communication) {
 
-            if (firstElement && secondElement && thirdElement && repetitionCounter == 0){
+            repetitionCounter = 0;
 
-//                System.out.println(i+3);
+            for (char letter : communication) {
 
-                firstPacketMarker = i+4;
                 repetitionCounter++;
+
+                if (initialLetter != letter && repetitionCounter == 3){
+
+
+                    System.out.println("Test");
+                }
             }
         }
 
-        System.out.println("Respuesta: " + firstPacketMarker);
+//        Todo comparar el elemento con cada caracter delante de el y si el
+//         elemento es diferente 3 veces entonces el index del sigte caracter es el marker
+//        System.out.println("Set: " + set);
+
+
+//        for (int i = 0; i < communication.length-3; i++) {
+//
+//            var firstElement = (communication[i] != communication[i+1] && communication[i] != communication[i+2] && communication[i] != communication[i+3]);
+//            var secondElement = (communication[i+1] != communication[i+2] && communication[i+1] != communication[i+3]);
+//            var thirdElement = (communication[i+2] != communication[i+3]);
+//
+//            if (firstElement && secondElement && thirdElement && repetitionCounter == 0){
+//
+//                firstPacketMarker = i+4;
+//                repetitionCounter++;
+//            }
+//        }
+//
+//        System.out.println("Respuesta: " + firstPacketMarker);
     }
 
     public static void supplyStacksChallenge() {
