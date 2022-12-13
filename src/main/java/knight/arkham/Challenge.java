@@ -22,8 +22,28 @@ public class Challenge {
 
         var signal = loadFileData("communication.txt");
 
-        while (signal.hasNextLine())
-            System.out.println(signal.nextLine());
+        var communication = convertStringToCharArray(signal.nextLine());
+
+        int repetitionCounter = 0;
+
+        int firstPacketMarker = 0;
+
+        for (int i = 0; i < communication.length-3; i++) {
+
+            var firstElement = (communication[i] != communication[i+1] && communication[i] != communication[i+2] && communication[i] != communication[i+3]);
+            var secondElement = (communication[i+1] != communication[i+2] && communication[i+1] != communication[i+3]);
+            var thirdElement = (communication[i+2] != communication[i+3]);
+
+            if (firstElement && secondElement && thirdElement && repetitionCounter == 0){
+
+//                System.out.println(i+3);
+
+                firstPacketMarker = i+4;
+                repetitionCounter++;
+            }
+        }
+
+        System.out.println("Respuesta: " + firstPacketMarker);
     }
 
     public static void supplyStacksChallenge() {
