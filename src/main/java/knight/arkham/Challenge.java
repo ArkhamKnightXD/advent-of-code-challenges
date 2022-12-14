@@ -20,7 +20,7 @@ public class Challenge {
 
     public static void tuningTroubleChallenge(){
 
-        var signal = loadFileData("communication.txt");
+        var signal = loadFileData("resources/communication.txt");
 
         var communication = convertStringToCharArray(signal.nextLine());
 
@@ -28,48 +28,32 @@ public class Challenge {
 
         int firstPacketMarker = 0;
 
-        var set = new HashSet<String>();
+//        Todo evaluar como utilizar hashSet para completar el challenge parte 2
+//        var set = new HashSet<String>();
 
-        for (char initialLetter : communication) {
 
-            repetitionCounter = 0;
+        for (int i = 0; i < communication.length-3; i++) {
 
-            for (char letter : communication) {
+            var firstElement = (communication[i] != communication[i+1] && communication[i] != communication[i+2] && communication[i] != communication[i+3]);
+            var secondElement = (communication[i+1] != communication[i+2] && communication[i+1] != communication[i+3]);
+            var thirdElement = (communication[i+2] != communication[i+3]);
 
+            if (firstElement && secondElement && thirdElement && repetitionCounter == 0){
+
+                firstPacketMarker = i+4;
                 repetitionCounter++;
-
-                if (initialLetter != letter && repetitionCounter == 3){
-
-
-                    System.out.println("Test");
-                }
             }
         }
 
-//        Todo comparar el elemento con cada caracter delante de el y si el
-//         elemento es diferente 3 veces entonces el index del sigte caracter es el marker
 //        System.out.println("Set: " + set);
 
 
-//        for (int i = 0; i < communication.length-3; i++) {
-//
-//            var firstElement = (communication[i] != communication[i+1] && communication[i] != communication[i+2] && communication[i] != communication[i+3]);
-//            var secondElement = (communication[i+1] != communication[i+2] && communication[i+1] != communication[i+3]);
-//            var thirdElement = (communication[i+2] != communication[i+3]);
-//
-//            if (firstElement && secondElement && thirdElement && repetitionCounter == 0){
-//
-//                firstPacketMarker = i+4;
-//                repetitionCounter++;
-//            }
-//        }
-//
-//        System.out.println("Respuesta: " + firstPacketMarker);
+        System.out.println("Respuesta: " + firstPacketMarker);
     }
 
     public static void supplyStacksChallenge() {
 
-        var cargoInstructions = loadFileData("supply-stacks.txt");
+        var cargoInstructions = loadFileData("resources/supply-stacks.txt");
 
         var initialValuesStack1 = new ArrayList<String>();
         var initialValuesStack2 = new ArrayList<String>();
@@ -169,6 +153,7 @@ public class Challenge {
 
         cargoInstructions.close();
 
+//        Todo lograr mostrar parte 1 y 2 juntos
 //        Para obtener la respuesta del challenge2 debo de cambiar el boolean de false a true.
         printChallengeResults(5, answerChallenge1, initialValuesStack1);
     }
@@ -241,7 +226,7 @@ public class Challenge {
 
     public static void campCleanupChallenge() {
 
-        var cleaningSections = loadFileData("cleaning-pairs.txt");
+        var cleaningSections = loadFileData("resources/cleaning-pairs.txt");
 
         int part1Counter = 0;
         int part2Counter = 0;
@@ -276,7 +261,7 @@ public class Challenge {
 
     public static void backpackOrganizationChallenge() {
 
-        var backpacksContent = loadFileData("backpacks.txt");
+        var backpacksContent = loadFileData("resources/backpacks.txt");
 
         int totalSumOfItemsPriority = 0;
         int totalSumOfBadgePriority = 0;
@@ -404,7 +389,7 @@ public class Challenge {
 
     public static void rockPaperAndScissorsChallenge() {
 
-        var tournamentRoundValues = loadFileData("tournament.txt");
+        var tournamentRoundValues = loadFileData("resources/tournament.txt");
 
         int totalScorePart1 = 0;
         int totalScorePart2 = 0;
@@ -470,7 +455,7 @@ public class Challenge {
 
     public static void caloriesChallenge() {
 
-        var calories = loadFileData("calories.txt");
+        var calories = loadFileData("resources/calories.txt");
 
         int actualSum = 0;
         int maxValue = 0;
