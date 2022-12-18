@@ -29,25 +29,40 @@ public class Challenge {
         int firstPacketMarker = 0;
 
 //        Todo evaluar como utilizar hashSet para completar el challenge parte 2
-//        var set = new HashSet<String>();
+
+        var temporalList = new ArrayList<String>();
+        var packetMarker = new ArrayList<Integer>();
 
 
-        for (int i = 0; i < communication.length-3; i++) {
+        for (int index = 0; index < communication.length; index++) {
 
-            var firstElement = (communication[i] != communication[i+1] && communication[i] != communication[i+2] && communication[i] != communication[i+3]);
-            var secondElement = (communication[i+1] != communication[i+2] && communication[i+1] != communication[i+3]);
-            var thirdElement = (communication[i+2] != communication[i+3]);
+            temporalList.add(String.valueOf(communication[index]));
 
-            if (firstElement && secondElement && thirdElement && repetitionCounter == 0){
+            if (temporalList.size() == 14){
 
-                firstPacketMarker = i+4;
-                repetitionCounter++;
+                var comparatorList = new ArrayList<String>();
+
+                for (var temp : temporalList) {
+
+                    if (!comparatorList.contains(temp)){
+
+                        comparatorList.add(temp);
+//                        Debido a que mi index empieza en 0 y yo estoy en busqueda de la cantidad de caracteres, en
+//                        donde se puede encontrar mi primer packetMarker debo de sumar 1 para compensar que el index empieza en 0
+                        if (comparatorList.size() == 14)
+                            packetMarker.add(index + 1);
+                    }
+                }
+
+                index -= temporalList.size() - 1;
+
+                temporalList.clear();
             }
         }
 
 //        System.out.println("Set: " + set);
 
-        System.out.println("Respuesta: " + firstPacketMarker);
+        System.out.println("Respuesta: " + packetMarker.get(0));
     }
 
     public static void supplyStacksChallenge() {
