@@ -24,45 +24,49 @@ public class Challenge {
 
         var communication = convertStringToCharArray(signal.nextLine());
 
-        int repetitionCounter = 0;
-
-        int firstPacketMarker = 0;
-
-//        Todo evaluar como utilizar hashSet para completar el challenge parte 2
-
         var temporalList = new ArrayList<String>();
-        var packetMarker = new ArrayList<Integer>();
 
+        int startOfPacketMarker = getFirstMarker(communication, temporalList, 4);
+        int startOfMessageMarker = getFirstMarker(communication, temporalList, 14);
+
+        printChallengeResults(6, startOfPacketMarker, startOfMessageMarker);
+    }
+
+    private static int getFirstMarker(char[] communication, ArrayList<String> temporalList, int characterQuantity) {
 
         for (int index = 0; index < communication.length; index++) {
 
             temporalList.add(String.valueOf(communication[index]));
 
-            if (temporalList.size() == 14){
+            if (temporalList.size() == characterQuantity){
 
                 var comparatorList = new ArrayList<String>();
 
-                for (var temp : temporalList) {
+                for (var actualValue : temporalList) {
 
-                    if (!comparatorList.contains(temp)){
+                    if (!comparatorList.contains(actualValue)){
 
-                        comparatorList.add(temp);
-//                        Debido a que mi index empieza en 0 y yo estoy en busqueda de la cantidad de caracteres, en
-//                        donde se puede encontrar mi primer packetMarker debo de sumar 1 para compensar que el index empieza en 0
-                        if (comparatorList.size() == 14)
-                            packetMarker.add(index + 1);
+                        comparatorList.add(actualValue);
+
+                        if (comparatorList.size() == characterQuantity){
+
+                            temporalList.clear();
+
+                            //Debido a que mi index empieza en 0 y yo estoy en busqueda de la cantidad de caracteres, en
+//              donde se puede encontrar mi primer packetMarker debo de sumar 1 para compensar que el index empieza en 0
+                            return index + 1;
+                        }
                     }
                 }
 
+//                Debo de resetear mi index quitandole el valor de mi lista - 1 para que empiece en el siguiente valor
+//                De donde habia iniciado a llenarse mi temporalList
                 index -= temporalList.size() - 1;
 
                 temporalList.clear();
             }
         }
-
-//        System.out.println("Set: " + set);
-
-        System.out.println("Respuesta: " + packetMarker.get(0));
+        return 0;
     }
 
     public static void supplyStacksChallenge() {
