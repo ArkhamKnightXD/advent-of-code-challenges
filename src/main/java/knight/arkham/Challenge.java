@@ -47,13 +47,10 @@ public class Challenge {
 
 //        System.out.println("Set: " + set);
 
-
         System.out.println("Respuesta: " + firstPacketMarker);
     }
 
     public static void supplyStacksChallenge() {
-
-        var cargoInstructions = loadFileData("resources/supply-stacks.txt");
 
         var initialValuesStack1 = new ArrayList<String>();
         var initialValuesStack2 = new ArrayList<String>();
@@ -64,6 +61,8 @@ public class Challenge {
         var initialValuesStack7 = new ArrayList<String>();
         var initialValuesStack8 = new ArrayList<String>();
         var initialValuesStack9 = new ArrayList<String>();
+
+        var cargoInstructions = loadFileData("resources/supply-stacks.txt");
 
         int lineCounter = 0;
 
@@ -146,16 +145,50 @@ public class Challenge {
                 rearrangeCargoStacks(cargoStackMap, instruction, false);
         }
 
-        var answerChallenge1 = new ArrayList<String>();
-
-        for (var actualStack :cargoStackMap.values())
-            answerChallenge1.add(actualStack.peek());
-
         cargoInstructions.close();
 
-//        Todo lograr mostrar parte 1 y 2 juntos
-//        Para obtener la respuesta del challenge2 debo de cambiar el boolean de false a true.
-        printChallengeResults(5, answerChallenge1, initialValuesStack1);
+        ArrayList<String> answerPart1 = getTopElementsFromTheCargoStacks(cargoStackMap);
+
+        fillTheStackFromAnList(stack1, initialValuesStack1);
+        fillTheStackFromAnList(stack2, initialValuesStack2);
+        fillTheStackFromAnList(stack3, initialValuesStack3);
+        fillTheStackFromAnList(stack4, initialValuesStack4);
+        fillTheStackFromAnList(stack5, initialValuesStack5);
+        fillTheStackFromAnList(stack6, initialValuesStack6);
+        fillTheStackFromAnList(stack7, initialValuesStack7);
+        fillTheStackFromAnList(stack8, initialValuesStack8);
+        fillTheStackFromAnList(stack9, initialValuesStack9);
+
+        var cargoInstructions2 = loadFileData("resources/supply-stacks.txt");
+
+        lineCounter = 0;
+
+        while (cargoInstructions2.hasNextLine()) {
+
+            lineCounter++;
+
+            var instruction = cargoInstructions2.nextLine();
+
+            if (lineCounter > 10)
+                rearrangeCargoStacks(cargoStackMap, instruction, true);
+        }
+
+        cargoInstructions2.close();
+
+        ArrayList<String> answerPart2 = getTopElementsFromTheCargoStacks(cargoStackMap);
+
+        printChallengeResults(5, answerPart1, answerPart2);
+    }
+
+    private static ArrayList<String> getTopElementsFromTheCargoStacks(HashMap<String, Stack<String>> cargoStackMap) {
+        var answerChallenge1 = new ArrayList<String>();
+
+        for (var actualStack : cargoStackMap.values()){
+            answerChallenge1.add(actualStack.peek());
+
+            actualStack.clear();
+        }
+        return answerChallenge1;
     }
 
     private static void rearrangeCargoStacks(HashMap<String, Stack<String>> cargoStackMap, String instruction, boolean isPart2) {
@@ -196,7 +229,7 @@ public class Challenge {
         for (var element : initialStackValues)
             stack.push(element);
 
-        initialStackValues.clear();
+        Collections.reverse(initialStackValues);
     }
 
     private static void moveElementsBetweenStacks(int elementsToMove, Stack<String> source, Stack<String> destination, boolean isPart2) {
