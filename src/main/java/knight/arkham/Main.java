@@ -8,6 +8,7 @@ public class Main {
 //        Challenge.backpackOrganizationChallenge();
 //        Challenge.campCleanupChallenge();
 //        Challenge.supplyStacksChallenge();
-        Challenge.tuningTroubleChallenge();
+//        Challenge.tuningTroubleChallenge();
+        Challenge.noSpaceLeftChallenge();
     }
 }

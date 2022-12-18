@@ -18,6 +18,19 @@ public class Challenge {
         return scanner;
     }
 
+    public static void noSpaceLeftChallenge(){
+
+        var fileSystem = loadFileData("resources/fileSystem.txt");
+
+        while (fileSystem.hasNextLine()){
+
+            var systemInfo = fileSystem.nextLine();
+
+            System.out.println(systemInfo);
+        }
+
+    }
+
     public static void tuningTroubleChallenge(){
 
         var signal = loadFileData("resources/communication.txt");
