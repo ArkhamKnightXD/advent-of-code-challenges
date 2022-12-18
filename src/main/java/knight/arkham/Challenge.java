@@ -20,13 +20,33 @@ public class Challenge {
 
     public static void noSpaceLeftChallenge(){
 
-        var fileSystem = loadFileData("resources/fileSystem.txt");
+//        var fileSystem = loadFileData("resources/fileSystem.txt");
+//
+//        while (fileSystem.hasNextLine()){
+//
+//            var systemInfo = fileSystem.nextLine();
+//
+//            System.out.println(systemInfo);
+//        }
 
-        while (fileSystem.hasNextLine()){
+        var parent = new NodeTree<>("parent1");
 
-            var systemInfo = fileSystem.nextLine();
+        System.out.println(parent.getRoot());
 
-            System.out.println(systemInfo);
+        NodeTree<String> child1 = parent.addChild("child1");
+        {
+            NodeTree<String> innerChild1 = child1.addChild("innerChild1OfChild1");
+            NodeTree<String> innerChild2 = child1.addChild("innerChild2OfChild1");
+            NodeTree<String> innerChild3 = child1.addChild("innerChild3OfChild1");
+
+            System.out.println("-" + child1);
+
+            System.out.println("--" + innerChild1);
+            System.out.println("--" + innerChild2);
+            System.out.println("--" + innerChild3);
+
+            System.out.println("Level of child1: " + child1.getLevel());
+            System.out.println("Level of innerChild2 in Child1: " + innerChild2.getLevel());
         }
 
     }
