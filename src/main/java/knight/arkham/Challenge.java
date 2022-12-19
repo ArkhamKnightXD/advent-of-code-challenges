@@ -18,11 +18,11 @@ public class Challenge {
         return scanner;
     }
 
-    public static void noSpaceLeftChallenge(){
+    public static void noSpaceLeftChallenge() {
 
         var fileSystem = loadFileData("resources/fileSystem.txt");
 
-        while (fileSystem.hasNextLine()){
+        while (fileSystem.hasNextLine()) {
 
             var systemInfo = fileSystem.nextLine();
 
@@ -50,7 +50,7 @@ public class Challenge {
 //        }
     }
 
-    public static void tuningTroubleChallenge(){
+    public static void tuningTroubleChallenge() {
 
         var signal = loadFileData("resources/communication.txt");
 
@@ -70,17 +70,17 @@ public class Challenge {
 
             temporalList.add(String.valueOf(communication[index]));
 
-            if (temporalList.size() == characterQuantity){
+            if (temporalList.size() == characterQuantity) {
 
                 var comparatorList = new ArrayList<String>();
 
                 for (var actualValue : temporalList) {
 
-                    if (!comparatorList.contains(actualValue)){
+                    if (!comparatorList.contains(actualValue)) {
 
                         comparatorList.add(actualValue);
 
-                        if (comparatorList.size() == characterQuantity){
+                        if (comparatorList.size() == characterQuantity) {
 
                             temporalList.clear();
 
@@ -234,7 +234,7 @@ public class Challenge {
     private static ArrayList<String> getTopElementsFromTheCargoStacks(HashMap<String, Stack<String>> cargoStackMap) {
         var answerChallenge1 = new ArrayList<String>();
 
-        for (var actualStack : cargoStackMap.values()){
+        for (var actualStack : cargoStackMap.values()) {
             answerChallenge1.add(actualStack.peek());
 
             actualStack.clear();
@@ -246,9 +246,9 @@ public class Challenge {
 
         var instructionLength = instruction.length();
 
-        var destinationKey = String.valueOf(instruction.charAt(instructionLength-1));
+        var destinationKey = String.valueOf(instruction.charAt(instructionLength - 1));
 
-        if (instructionLength == 18){
+        if (instructionLength == 18) {
 
             int elementsToMove = Integer.parseInt(String.valueOf(instruction.charAt(5)));
 
@@ -258,9 +258,7 @@ public class Challenge {
             var destinationStack = cargoStackMap.get(destinationKey);
 
             moveElementsBetweenStacks(elementsToMove, sourceStack, destinationStack, isPart2);
-        }
-
-        else{
+        } else {
 
             int elementsToMove = Integer.parseInt(String.valueOf(instruction.charAt(5)) + instruction.charAt(6));
 
@@ -294,7 +292,7 @@ public class Challenge {
 
             var temporalList = new ArrayList<String>();
 
-            while (temporalList.size() < elementsToMove){
+            while (temporalList.size() < elementsToMove) {
 
                 var element = source.pop();
                 temporalList.add(element);
@@ -493,13 +491,13 @@ public class Challenge {
 
     private static int getTournamentTotalScore(int totalScore, String roundValue, boolean isPart1) {
 
-        var rockScore = 1;
-        var paperScore = 2;
-        var scissorsScore = 3;
+        int rockScore = 1;
+        int paperScore = 2;
+        int scissorsScore = 3;
 
-        var lost = 0;
-        var draw = 3;
-        var win = 6;
+        int lost = 0;
+        int draw = 3;
+        int win = 6;
 
         //Rival variables: A = Rock, B = Paper, C = Scissor
         //My Variables Part 1: X = Rock, Y = Paper, Z = Scissor
@@ -537,42 +535,39 @@ public class Challenge {
         return totalScore;
     }
 
-    public static void caloriesChallenge() {
+    public static void caloriesCountingChallenge() {
 
         var calories = loadFileData("resources/calories.txt");
 
-        int actualSum = 0;
-        int maxValue = 0;
+        int actualCaloriesSum = 0;
+        int maxCaloriesElf = 0;
 
-        var totalCaloriesOfEachElf = new ArrayList<String>();
+        var topCaloriesElf = new ArrayList<Integer>();
 
         while (calories.hasNextLine()) {
 
             var actualCalories = calories.nextLine();
 
-            if (actualCalories.equals("")) {
+            if (actualCalories.isEmpty()) {
 
-                if (actualSum > maxValue) {
-                    maxValue = actualSum;
+                if (actualCaloriesSum > maxCaloriesElf) {
+                    maxCaloriesElf = actualCaloriesSum;
 
-                    totalCaloriesOfEachElf.add(String.valueOf(maxValue));
+                    topCaloriesElf.add(maxCaloriesElf);
                 }
 
-                actualSum = 0;
+                actualCaloriesSum = 0;
             } else
-                actualSum += Integer.parseInt(actualCalories);
+                actualCaloriesSum += Integer.parseInt(actualCalories);
         }
 
         calories.close();
 
-        var arraySize = totalCaloriesOfEachElf.size() - 1;
+        Collections.reverse(topCaloriesElf);
 
-        var totalCaloriesOfTop3 = Integer.parseInt(totalCaloriesOfEachElf.get(arraySize)) +
+        int totalCaloriesOfTop3 = topCaloriesElf.get(0) + topCaloriesElf.get(1) + topCaloriesElf.get(2);
 
-                Integer.parseInt(totalCaloriesOfEachElf.get(arraySize - 1)) +
-                Integer.parseInt(totalCaloriesOfEachElf.get(arraySize - 2));
-
-        printChallengeResults(1, maxValue, totalCaloriesOfTop3);
+        printChallengeResults(1, maxCaloriesElf, totalCaloriesOfTop3);
     }
 
     private static void printChallengeResults(int challengeNumber, int challenge1, int challenge2) {
