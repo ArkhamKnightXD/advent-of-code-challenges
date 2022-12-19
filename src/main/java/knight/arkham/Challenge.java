@@ -210,9 +210,16 @@ public class Challenge {
         fillTheStackFromAnList(stack8, initialValuesStack8);
         fillTheStackFromAnList(stack9, initialValuesStack9);
 
+        ArrayList<String> answerPart2 = getCargoRearrangePart2(cargoStackMap);
+
+        printChallengeResults(5, answerPart1, answerPart2);
+    }
+
+    private static ArrayList<String> getCargoRearrangePart2(HashMap<String, Stack<String>> cargoStackMap) {
+
         var cargoInstructions2 = loadFileData("resources/supply-stacks.txt");
 
-        lineCounter = 0;
+        int lineCounter = 0;
 
         while (cargoInstructions2.hasNextLine()) {
 
@@ -226,9 +233,7 @@ public class Challenge {
 
         cargoInstructions2.close();
 
-        ArrayList<String> answerPart2 = getTopElementsFromTheCargoStacks(cargoStackMap);
-
-        printChallengeResults(5, answerPart1, answerPart2);
+        return getTopElementsFromTheCargoStacks(cargoStackMap);
     }
 
     private static ArrayList<String> getTopElementsFromTheCargoStacks(HashMap<String, Stack<String>> cargoStackMap) {
@@ -358,12 +363,8 @@ public class Challenge {
 
             actualElfGroup.add(content);
 
-            if (actualElfGroup.size() == 3) {
-
+            if (actualElfGroup.size() == 3)
                 totalSumOfBadgePriority += getPriorityBadgeSum(actualElfGroup, itemsPriority);
-
-                actualElfGroup.clear();
-            }
 
             totalSumOfItemsPriority += getPriorityItemSum(content, itemsPriority);
         }
@@ -403,6 +404,8 @@ public class Challenge {
             }
         }
 
+        elfGroup.clear();
+
         return sumOfBadgePriority;
     }
 
@@ -434,14 +437,14 @@ public class Challenge {
         return sumOfItemsPriority;
     }
 
-    private static char[] convertStringToCharArray(String backpackContent) {
+    private static char[] convertStringToCharArray(String content) {
 
-        var backpackItems = new char[backpackContent.length()];
+        var items = new char[content.length()];
 
-        for (int i = 0; i < backpackContent.length(); i++)
-            backpackItems[i] = backpackContent.charAt(i);
+        for (int i = 0; i < content.length(); i++)
+            items[i] = content.charAt(i);
 
-        return backpackItems;
+        return items;
     }
 
     // To help prioritize item rearrangement, every item type can be converted to a priority:
