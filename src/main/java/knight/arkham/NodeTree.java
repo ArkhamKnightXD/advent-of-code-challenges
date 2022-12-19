@@ -45,5 +45,4 @@ public class NodeTree<T> {
     public String toString() {
         return root != null ? root.toString() : "null";
     }
-
 }
